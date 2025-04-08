@@ -10,3 +10,7 @@ The browser needs to be cleaned regularly, but you don't want to dissolve or del
 
 - Add tab groups to favorites
 - Support custom names, save locations, and right-click operations
+
+## Installation
+
+edge浏览器搜索插件，输入`save-tab-group-bookmarks`，安装即可。兼容chrome和edge。
