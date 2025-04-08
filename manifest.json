@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "收藏标签组 Bookmark Tab Group",
+  "name_en": "Bookmark Tab Group",
+  "version": "3.0",
+  "description": "将标签组添加到收藏夹，支持自定义名称、保存的位置和右键操作 Bookmark tab groups, supports custom names, save locations, and right-click operations",
+  "description_en": "Bookmark tab groups, supports custom names, save locations, and right-click operations",
+  "permissions": ["tabs", "bookmarks", "storage", "tabGroups", "contextMenus"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png",
+      "512": "icon.png",
+      "1024": "icon.png",
+      "2048": "icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html"
+}
