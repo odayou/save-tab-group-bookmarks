@@ -4,21 +4,407 @@
   <meta charset="utf-8">
   <title>保存标签组</title>
   <style>
-    body { font-family: sans-serif; padding: 10px; width: 300px; }
-    input[type=text], select, button { width: 100%; margin-top: 10px; padding: 8px 0px; font-size: 14px; }
+    body { font-family: sans-serif; padding: 10px; width: 400px; }
+    /* input[type=text], select, button {margin-top: 10px; padding: 8px 8px; font-size: 14px; width: 100%; box-sizing: border-box; } */
     #bookmarkFolder option { padding-left: 10px; }
     #setDefaultFolder { margin-top: 10px; }
     #bookmarkFolder { font-size: 14px; }
-    #saveGroup { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-    #saveGroup:hover { background-color: #45a049; }
+    /* #saveGroup { background-color: #4CAF50; color: white; border: none; cursor: pointer; } */
+    /* #saveGroup:hover { background-color: #45a049; } */
+
+    :root {
+    --edge-primary: #0078D4;
+    --edge-hover: #106EBE;
+    --edge-border: #E1E1E1;
+    --edge-background: #FFFFFF;
+    --edge-text: #323130;
+    --edge-secondary-text: #605E5C;
+}
+
+/* 基础样式 */
+/* body {
+    width: 450px;
+    margin: 0;
+    padding: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--edge-text);
+    background: var(--edge-background);
+} */
+
+/* 头部样式 */
+.header {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.lang-selector {
+    font-size: 12px;
+    padding: 2px 4px;
+    border: 1px solid var(--edge-border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--edge-secondary-text);
+    cursor: pointer;
+    width: 80px;
+    margin-left: 12px;
+}
+
+.lang-selector:hover {
+    border-color: var(--edge-primary);
+    color: var(--edge-text);
+}
+
+.header-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 2px solid var(--edge-border);
+    padding: 2px 0;
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.nav-tab {
+    padding: 6px 12px;
+    border: none;
+    background: none;
+    font-size: 13px;
+    color: var(--edge-secondary-text);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.nav-tab:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.nav-tab.active {
+    color: var(--edge-primary);
+    background: rgba(0, 120, 212, 0.1);
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--edge-border);
+    border-radius: 4px;
+    background: var(--edge-background);
+    color: var(--edge-text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    background: #f3f3f3;
+}
+
+.btn-primary {
+    background: var(--edge-primary);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--edge-hover);
+}
+
+/* 分组列表样式 */
+.section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--edge-secondary-text);
+    margin: 0 0 12px;
+}
+
+.opened-groups {
+    margin: 16px 0;
+}
+
+.group-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    border-radius: 6px;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.group-item:hover {
+    border-color: var(--edge-primary);
+}
+
+.group-item label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.group-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0 12px 0 0;
+    cursor: pointer;
+}
+
+.group-title-wrapper {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-right: 8px;
+    transition: all 0.2s ease;
+    flex-grow: 1;
+    max-width: 70%;
+}
+
+.group-title-wrapper:hover {
+    background-color: rgba(0, 120, 212, 0.1);
+}
+
+.color-tag {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 1px;
+    flex-shrink: 0;
+}
+
+.group-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--edge-text);
+    flex-grow: 1;
+    padding: 0 4px;
+}
+
+.tab-count {
+    font-size: 12px;
+    color: var(--edge-secondary-text);
+    background: rgba(0, 0, 0, 0.05);
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: 1px;
+    flex-shrink: 0;
+}
+
+/* 搜索框样式 */
+.search-box {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 32px 8px 12px;
+    border: 1px solid var(--edge-border);
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--edge-primary);
+}
+
+.search-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--edge-secondary-text);
+}
+
+/* Toast 提示样式 */
+.toast {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    z-index: 1000;
+    animation: fadeInOut 2.5s;
+}
+
+.toast-hidden {
+    display: none;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+}
+
+/* 空状态样式 */
+.empty-state {
+    text-align: center;
+    padding: 24px;
+    color: var(--edge-secondary-text);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #C8C8C8;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #A6A6A6;
+}
+
+/* 已保存分组列表样式 */
+.saved-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--edge-border);
+    border-radius: 6px;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.saved-group-item:hover {
+    border-color: var(--edge-primary);
+}
+
+.saved-group-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 16px;
+}
+
+.group-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--edge-secondary-text);
+    font-size: 12px;
+}
+
+.group-date {
+    color: var(--edge-secondary-text);
+}
+
+.group-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--edge-secondary-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: #f0f0f0;
+    color: var(--edge-text);
+}
+
+.restore-btn:hover {
+    color: var(--edge-primary);
+}
+
+.delete-btn:hover {
+    color: var(--edge-danger);
+}
+
+.empty-state.error {
+    color: var(--edge-danger);
+}
+#folderName {
+  display: none;
+}
   </style>
 </head>
 <body>
-  <input type="text" id="folderName" placeholder="在收藏夹中的名称（默认为标签组名）" />
-  <input type="text" id="searchInput" placeholder="搜索并选择要保存的位置" />
-  <select id="bookmarkFolder" size="8"></select>
-  <label><input type="checkbox" id="setDefaultFolder" /> 设置选中文件夹为默认位置</label>
-  <button id="saveGroup">添加到收藏夹</button>
+  <!-- 1. 列出所有标签组，标题展示组内有多少个标签页; 2. 支持展开具体组的内容。3.支持多选，选中的组可以保存到收藏夹的指定位置 -->
+    <div class="section-title">所有标签页组
+
+    </div>
+    <div class="header">
+      <div class="header-left">
+        <input type="checkbox" id="selectAllGroups" class="group-checkbox">
+        <label for="selectAllGroups">全选</label>
+      </div>
+    </div>
+    <div id="groups">
+      <!-- 渲染 所有标签组 -->
+    </div>
+    <input type="text" id="folderName" placeholder="在收藏夹中的名称（默认为标签组名）" />
+  </div>
+  <div>
+    <input type="text" id="searchInput" class="search-input" placeholder="搜索并选择要保存的位置" />
+  </div>
+  <div>
+    <select id="bookmarkFolder" size="8"></select>
+  </div>
+  <div>
+    <label><input type="checkbox" id="setDefaultFolder" /> 设置选中文件夹为默认位置</label>
+  </div>
+  <div class="group-actions"> 
+    <button id="saveGroup" class="btn btn-primary">保存到收藏夹</button>
+  </div>
   <script src="popup.js"></script>
 </body>
 </html>
