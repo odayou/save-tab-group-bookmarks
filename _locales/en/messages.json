@@ -136,5 +136,8 @@
   },
   "tab_group_selection": {
     "message": "Select Tab Group:"
+  },
+  "context_menu_save": {
+    "message": "Add tab group to bookmarks"
   }
 }

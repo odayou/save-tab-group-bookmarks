@@ -135,6 +135,9 @@
     "message": "已跳过 $1 个重复的标签组。"
   },
   "tab_group_selection": {
-    "message": "选择标签组:"
+    "message": "标签页组选择"
+  },
+  "context_menu_save": {
+    "message": "将标签组添加到收藏夹"
   }
 }
