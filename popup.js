@@ -610,6 +610,28 @@ function initLanguage() {
   // 初始翻译
   translateAllElements();
   updateUIForLanguage();
+  
+  // 根据语言显示对应的简介文本
+  updateIntroText();
+}
+
+// 根据语言更新简介文本
+function updateIntroText() {
+  const browserLang = navigator.language;
+  const isChinese = browserLang.startsWith("zh");
+  
+  const introChinese = document.querySelector('.intro-chinese');
+  const introEnglish = document.querySelector('.intro-english');
+  
+  if (introChinese && introEnglish) {
+    if (isChinese) {
+      introChinese.style.display = 'block';
+      introEnglish.style.display = 'none';
+    } else {
+      introChinese.style.display = 'none';
+      introEnglish.style.display = 'block';
+    }
+  }
 }
 
 // Select2 功能
