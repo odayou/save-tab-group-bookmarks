@@ -2,409 +2,462 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>保存标签组</title>
+  <title>标签页组归档</title>
   <style>
-    body { font-family: sans-serif; padding: 10px; width: 400px; }
-    /* input[type=text], select, button {margin-top: 10px; padding: 8px 8px; font-size: 14px; width: 100%; box-sizing: border-box; } */
-    #bookmarkFolder option { padding-left: 10px; }
-    #setDefaultFolder { margin-top: 10px; }
-    #bookmarkFolder { font-size: 14px; }
-    /* #saveGroup { background-color: #4CAF50; color: white; border: none; cursor: pointer; } */
-    /* #saveGroup:hover { background-color: #45a049; } */
-
     :root {
-    --edge-primary: #0078D4;
-    --edge-hover: #106EBE;
-    --edge-border: #E1E1E1;
-    --edge-background: #FFFFFF;
-    --edge-text: #323130;
-    --edge-secondary-text: #605E5C;
-}
+        --edge-primary: #0078D4;
+        --edge-hover: #106EBE;
+        --edge-border: #E1E1E1;
+        --edge-background: #FFFFFF;
+        --edge-text: #323130;
+        --edge-secondary-text: #605E5C;
+        --edge-danger: #E81123;
+    }
 
-/* 基础样式 */
-/* body {
-    width: 450px;
-    margin: 0;
-    padding: 16px;
-    font-family: 'Segoe UI', sans-serif;
-    color: var(--edge-text);
-    background: var(--edge-background);
-} */
+    /* 基础样式 */
+    body {
+        width: 400px;
+        margin: 0;
+        padding: 8px;
+        font-family: 'Segoe UI', sans-serif;
+        color: var(--edge-text);
+        background: var(--edge-background);
+        position: relative;
+    }
 
-/* 头部样式 */
-.header {
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    /* 插件标题栏 */
+    .plugin-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid var(--edge-border);
+    }
 
-.header-left {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-}
+    .plugin-title {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
 
-.lang-selector {
-    font-size: 12px;
-    padding: 2px 4px;
-    border: 1px solid var(--edge-border);
-    border-radius: 4px;
-    background: transparent;
-    color: var(--edge-secondary-text);
-    cursor: pointer;
-    width: 80px;
-    margin-left: 12px;
-}
+    .help-button {
+        width: 20px;
+        height: 20px;
+        border: 1px solid var(--edge-border);
+        border-radius: 50%;
+        background: var(--edge-background);
+        color: var(--edge-secondary-text);
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
 
-.lang-selector:hover {
-    border-color: var(--edge-primary);
-    color: var(--edge-text);
-}
+    .help-button:hover {
+        background: var(--edge-primary);
+        color: white;
+        border-color: var(--edge-primary);
+    }
 
-.header-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0;
-}
+    /* 帮助提示 */
+    .help-tooltip {
+        display: none;
+        position: absolute;
+        top: 40px;
+        right: 12px;
+        background: var(--edge-background);
+        border: 1px solid var(--edge-border);
+        border-radius: 6px;
+        padding: 12px;
+        width: 300px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        font-size: 13px;
+        line-height: 1.4;
+    }
 
-.nav-tabs {
-    display: flex;
-    gap: 8px;
-    border-bottom: 2px solid var(--edge-border);
-    padding: 2px 0;
-    width: 100%;
-    margin-bottom: 6px;
-}
 
-.nav-tab {
-    padding: 6px 12px;
-    border: none;
-    background: none;
-    font-size: 13px;
-    color: var(--edge-secondary-text);
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.2s;
-}
 
-.nav-tab:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
+    /* 按钮样式 */
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border: 1px solid var(--edge-border);
+        border-radius: 3px;
+        background: var(--edge-background);
+        color: var(--edge-text);
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
 
-.nav-tab.active {
-    color: var(--edge-primary);
-    background: rgba(0, 120, 212, 0.1);
-}
+    .btn:hover {
+        background: #f3f3f3;
+    }
 
-.page {
-    display: none;
-}
+    .btn-primary {
+        background: var(--edge-primary);
+        color: white;
+        border: none;
+    }
 
-.page.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
+    .btn-primary:hover {
+        background: var(--edge-hover);
+    }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    /* 操作按钮组样式 */
+    .group-actions {
+        display: flex;
+        gap: 6px;
+        margin: 6px 0 0 0;
+    }
 
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border: 1px solid var(--edge-border);
-    border-radius: 4px;
-    background: var(--edge-background);
-    color: var(--edge-text);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
+    /* 当前打开的标签组列表样式 */
+    .group-item {
+        padding: 0;
+        margin-bottom: 3px;
+        border-radius: 4px;
+        background: white;
+        border: 1px solid var(--edge-border);
+        transition: all 0.2s ease;
+    }
 
-.btn:hover {
-    background: #f3f3f3;
-}
+    .group-item:hover {
+        border-color: var(--edge-primary);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
 
-.btn-primary {
-    background: var(--edge-primary);
-    color: white;
-    border: none;
-}
+    .group-header {
+        display: flex;
+        align-items: center;
+        padding: 8px 10px;
+        cursor: pointer;
+    }
 
-.btn-primary:hover {
-    background: var(--edge-hover);
-}
+    .group-item label {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: pointer;
+    }
 
-/* 分组列表样式 */
-.section-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--edge-secondary-text);
-    margin: 0 0 12px;
-}
+    .group-checkbox {
+        width: 15px;
+        height: 15px;
+        margin: 0 8px 0 0;
+        cursor: pointer;
+    }
 
-.opened-groups {
-    margin: 16px 0;
-}
+    .group-toggle {
+        width: 14px;
+        height: 14px;
+        margin-right: 6px;
+        cursor: pointer;
+        color: var(--edge-secondary-text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        transition: transform 0.2s ease;
+    }
 
-.group-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2px;
-    border-radius: 6px;
-    background: white;
-    transition: all 0.2s ease;
-}
+    .group-toggle.expanded {
+        transform: rotate(90deg);
+    }
 
-.group-item:hover {
-    border-color: var(--edge-primary);
-}
+    .group-info {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+    }
 
-.group-item label {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
-}
+    .color-tag {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
 
-.group-checkbox {
-    width: 16px;
-    height: 16px;
-    margin: 0 12px 0 0;
-    cursor: pointer;
-}
+    .group-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--edge-text);
+        flex-grow: 1;
+    }
 
-.group-title-wrapper {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-right: 8px;
-    transition: all 0.2s ease;
-    flex-grow: 1;
-    max-width: 70%;
-}
+    .tab-count {
+        font-size: 11px;
+        color: var(--edge-secondary-text);
+        background: rgba(0, 0, 0, 0.05);
+        padding: 1px 6px;
+        border-radius: 10px;
+        margin-left: 6px;
+        flex-shrink: 0;
+    }
 
-.group-title-wrapper:hover {
-    background-color: rgba(0, 120, 212, 0.1);
-}
+    /* 标签页列表样式 */
+    .tab-list {
+        display: none;
+        padding: 0 12px 12px 48px;
+        border-top: 1px solid var(--edge-border);
+        background-color: rgba(0, 0, 0, 0.02);
+    }
 
-.color-tag {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 1px;
-    flex-shrink: 0;
-}
+    .tab-list.expanded {
+        display: block;
+    }
 
-.group-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--edge-text);
-    flex-grow: 1;
-    padding: 0 4px;
-}
+    .tab-item {
+        padding: 8px 12px;
+        margin: 4px 0;
+        border-radius: 4px;
+        background: white;
+        border: 1px solid var(--edge-border);
+        font-size: 12px;
+        transition: all 0.2s ease;
+    }
 
-.tab-count {
-    font-size: 12px;
-    color: var(--edge-secondary-text);
-    background: rgba(0, 0, 0, 0.05);
-    padding: 2px 6px;
-    border-radius: 12px;
-    margin-left: 1px;
-    flex-shrink: 0;
-}
+    .tab-item:hover {
+        background-color: rgba(0, 120, 212, 0.05);
+        border-color: var(--edge-primary);
+    }
 
-/* 搜索框样式 */
-.search-box {
-    position: relative;
-    margin-bottom: 16px;
-}
+    .tab-item a {
+        color: var(--edge-primary);
+        text-decoration: none;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-.search-input {
-    width: 100%;
-    padding: 8px 32px 8px 12px;
-    border: 1px solid var(--edge-border);
-    border-radius: 4px;
-    font-size: 13px;
-    box-sizing: border-box;
-}
+    .tab-item a:hover {
+        text-decoration: underline;
+    }
 
-.search-input:focus {
-    outline: none;
-    border-color: var(--edge-primary);
-}
+    /* 全选控制样式 */
+    .select-all-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        padding: 4px 0;
+    }
 
-.search-icon {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--edge-secondary-text);
-}
+    /* 表单样式 */
+    .form-label {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 12px;
+        color: var(--edge-text);
+    }
 
-/* Toast 提示样式 */
-.toast {
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 13px;
-    z-index: 1000;
-    animation: fadeInOut 2.5s;
-}
+    .form-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid var(--edge-border);
+        border-radius: 3px;
+        font-size: 12px;
+        box-sizing: border-box;
+        margin-bottom: 6px;
+    }
 
-.toast-hidden {
-    display: none;
-}
+    .form-input:focus {
+        outline: none;
+        border-color: var(--edge-primary);
+    }
 
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-    15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
-}
+    /* 收藏夹选择样式 */
+    #bookmarkFolder {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid var(--edge-border);
+        border-radius: 3px;
+        font-size: 12px;
+        box-sizing: border-box;
+        margin-bottom: 6px;
+    }
 
-/* 空状态样式 */
-.empty-state {
-    text-align: center;
-    padding: 24px;
-    color: var(--edge-secondary-text);
-}
+    #bookmarkFolder option {
+        padding: 3px 6px;
+    }
 
-/* 滚动条样式 */
-::-webkit-scrollbar {
-    width: 8px;
-}
+    /* 设置默认位置样式 */
+    .default-folder-option {
+        margin: 6px 0;
+        font-size: 12px;
+    }
 
-::-webkit-scrollbar-track {
-    background: transparent;
-}
+    /* 空状态样式 */
+    .empty-state {
+        text-align: center;
+        padding: 16px;
+        color: var(--edge-secondary-text);
+        font-size: 13px;
+    }
 
-::-webkit-scrollbar-thumb {
-    background: #C8C8C8;
-    border-radius: 4px;
-}
+    /* 组件内提示样式 */
+    .inline-alert {
+        padding: 10px 12px;
+        margin: 8px 0;
+        border-radius: 4px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        animation: slideDown 0.3s ease;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #A6A6A6;
-}
+    .inline-alert.success {
+        background-color: #D7F9E0;
+        color: #047857;
+        border: 1px solid #A7F3D0;
+    }
 
-/* 已保存分组列表样式 */
-.saved-group-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px;
-    margin-bottom: 8px;
-    border: 1px solid var(--edge-border);
-    border-radius: 6px;
-    background: white;
-    transition: all 0.2s ease;
-}
+    .inline-alert.warning {
+        background-color: #FFFBEB;
+        color: #92400E;
+        border: 1px solid #FEF3C7;
+    }
 
-.saved-group-item:hover {
-    border-color: var(--edge-primary);
-}
+    .inline-alert.error {
+        background-color: #FEE2E2;
+        color: #991B1B;
+        border: 1px solid #FECACA;
+    }
 
-.saved-group-content {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-right: 16px;
-}
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-.group-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--edge-secondary-text);
-    font-size: 12px;
-}
+    /* 滚动条样式 */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
 
-.group-date {
-    color: var(--edge-secondary-text);
-}
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
 
-.group-actions {
-    display: flex;
-    gap: 8px;
-}
+    ::-webkit-scrollbar-thumb {
+        background: #C8C8C8;
+        border-radius: 4px;
+    }
 
-.action-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-    background: transparent;
-    color: var(--edge-secondary-text);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.action-btn:hover {
-    background-color: #f0f0f0;
-    color: var(--edge-text);
-}
-
-.restore-btn:hover {
-    color: var(--edge-primary);
-}
-
-.delete-btn:hover {
-    color: var(--edge-danger);
-}
-
-.empty-state.error {
-    color: var(--edge-danger);
-}
-#folderName {
-  display: none;
-}
+    ::-webkit-scrollbar-thumb:hover {
+        background: #A6A6A6;
+    }
   </style>
 </head>
 <body>
-  <!-- 1. 列出所有标签组，标题展示组内有多少个标签页; 2. 支持展开具体组的内容。3.支持多选，选中的组可以保存到收藏夹的指定位置 -->
-    <div class="section-title">所有标签页组
+    <!-- 插件标题栏 -->
+    <div class="plugin-header">
+        <h1 class="plugin-title">标签页组归档</h1>
+        <button class="help-button" title="查看帮助">?</button>
+    </div>
+    
+    <!-- 帮助提示 -->
+    <div class="help-tooltip" style="display: none;">
+        <h4 style="margin: 0 0 8px 0; font-size: 14px;">核心功能</h4>
+        <p style="margin: 0 0 8px 0; font-size: 13px;">1. 快速将当前打开的标签组保存到收藏夹</p>
+        <p style="margin: 0 0 8px 0; font-size: 13px;">2. 支持选择多个标签组批量保存</p>
+        <p style="margin: 0 0 8px 0; font-size: 13px;">3. 智能检测重复内容，避免重复保存</p>
+        <p style="margin: 0; font-size: 13px;">4. 支持自定义保存位置和默认文件夹</p>
+        <button style="margin-top: 8px; padding: 4px 8px; font-size: 12px; background: var(--edge-primary); color: white; border: none; border-radius: 3px; cursor: pointer;">关闭</button>
+    </div>
 
+    <!-- 当前打开的标签组页面 -->
+    <div id="opened-groups">
+        <!-- 全选控制 -->
+        <div class="select-all-container">
+            <input type="checkbox" id="selectAllGroups" class="group-checkbox">
+            <label for="selectAllGroups" style="margin-left: 8px;">全选</label>
+        </div>
+        
+        <!-- 已选中分组提示 -->
+        <div id="selectedGroupsInfo" style="font-size: 11px; color: var(--edge-secondary-text); margin-bottom: 6px; padding: 4px 6px; background-color: rgba(0, 120, 212, 0.05); border-radius: 3px;"></div>
+        
+        <!-- 标签组列表 -->
+        <div id="groups" style="max-height: 200px; overflow-y: auto; margin-bottom: 8px; border: 1px solid var(--edge-border); border-radius: 3px; padding: 6px;">
+            <!-- 渲染所有标签组 -->
+        </div>
+
+        <!-- 搜索并选择收藏夹位置 -->
+        <div style="margin-bottom: 6px;">
+            <label for="searchInput" class="form-label" style="margin-bottom: 3px; display: block;">搜索目标位置:</label>
+            <input type="text" id="searchInput" class="form-input" placeholder="保存到收藏夹哪个位置？搜索并选择" />
+            <label for="bookmarkFolder" class="form-label" style="margin-bottom: 3px; display: block;">选择目标位置:</label>
+            <select id="bookmarkFolder"></select>
+        </div>
+
+        <!-- 设置默认位置选项 -->
+        <div class="default-folder-option">
+            <label><input type="checkbox" id="setDefaultFolder" /> <span id="defaultFolderText">设为默认保存位置</span></label>
+        </div>
+
+        <!-- 保存按钮 -->
+        <div class="group-actions"> 
+            <button id="saveGroup" class="btn btn-primary" style="flex-grow: 1;">保存选中的标签组</button>
+            <button id="refreshList" class="btn">刷新</button>
+        </div>
     </div>
-    <div class="header">
-      <div class="header-left">
-        <input type="checkbox" id="selectAllGroups" class="group-checkbox">
-        <label for="selectAllGroups">全选</label>
-      </div>
-    </div>
-    <div id="groups">
-      <!-- 渲染 所有标签组 -->
-    </div>
-    <input type="text" id="folderName" placeholder="在收藏夹中的名称（默认为标签组名）" />
-  </div>
-  <div>
-    <input type="text" id="searchInput" class="search-input" placeholder="搜索并选择要保存的位置" />
-  </div>
-  <div>
-    <select id="bookmarkFolder" size="8"></select>
-  </div>
-  <div>
-    <label><input type="checkbox" id="setDefaultFolder" /> 设置选中文件夹为默认位置</label>
-  </div>
-  <div class="group-actions"> 
-    <button id="saveGroup" class="btn btn-primary">保存到收藏夹</button>
-  </div>
-  <script src="popup.js"></script>
+
+    <script>
+        // 帮助按钮交互
+        const helpButton = document.querySelector('.help-button');
+        const helpTooltip = document.querySelector('.help-tooltip');
+        
+        helpButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            helpTooltip.style.display = helpTooltip.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // 点击关闭按钮关闭帮助
+        const closeButton = helpTooltip.querySelector('button');
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                helpTooltip.style.display = 'none';
+            });
+        }
+        
+        // 点击页面其他位置关闭帮助
+        document.addEventListener('click', (e) => {
+            if (!helpButton.contains(e.target) && !helpTooltip.contains(e.target)) {
+                helpTooltip.style.display = 'none';
+            }
+        });
+        
+        // 实时更新默认位置文字
+        const bookmarkFolder = document.getElementById('bookmarkFolder');
+        const defaultFolderText = document.getElementById('defaultFolderText');
+        
+        bookmarkFolder.addEventListener('change', () => {
+            const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
+            if (selectedOption) {
+                const folderName = selectedOption.textContent;
+                defaultFolderText.textContent = `把「${folderName}」设置为默认保存的位置`;
+            }
+        });
+        
+        // 初始加载时更新默认位置文字
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
+            if (selectedOption) {
+                const folderName = selectedOption.textContent;
+                defaultFolderText.textContent = `把「${folderName}」设置为默认保存的位置`;
+            }
+        });
+    </script>
+    <script src="popup.js"></script>
 </body>
 </html>
