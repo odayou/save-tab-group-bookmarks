@@ -546,13 +546,24 @@ function showInlineAlert(message, type = 'success', duration = 3000) {
 function updateDefaultFolderText() {
   const bookmarkFolder = document.getElementById('bookmarkFolder');
   const defaultFolderText = document.getElementById('defaultFolderText');
+  const selectedTextElement = document.getElementById('select2-selected-text');
   
   const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
   if (selectedOption) {
     const folderName = selectedOption.textContent;
     defaultFolderText.textContent = chrome.i18n.getMessage("set_default_folder", [folderName]);
+    
+    // 更新select2显示文本
+    if (selectedTextElement) {
+      selectedTextElement.textContent = folderName;
+    }
   } else {
     defaultFolderText.textContent = chrome.i18n.getMessage("language_auto") === "Follow Browser" ? "Set as default location" : "设为默认保存位置";
+    
+    // 更新select2显示文本
+    if (selectedTextElement) {
+      selectedTextElement.textContent = chrome.i18n.getMessage("bookmark_folder") || "选择收藏夹位置";
+    }
   }
 }
 
@@ -576,19 +587,22 @@ function updateUIForLanguage() {
   document.getElementById("refreshList").textContent = chrome.i18n.getMessage("refresh_button");
   
   // 更新搜索框占位符
-  document.getElementById("searchInput").placeholder = chrome.i18n.getMessage("bookmark_folder");
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.placeholder = chrome.i18n.getMessage("bookmark_folder");
+  }
   
   // 更新全选文本
-  document.querySelector('label[for="selectAllGroups"]').textContent = chrome.i18n.getMessage("select_all");
-  
-  // 更新搜索标签
-  document.querySelector('label[for="searchInput"]').textContent = chrome.i18n.getMessage("search_target");
+  const selectAllLabel = document.querySelector('label[for="selectAllGroups"]');
+  if (selectAllLabel) {
+    selectAllLabel.textContent = chrome.i18n.getMessage("select_all");
+  }
   
   // 更新选择标签
-  document.querySelector('label[for="bookmarkFolder"]').textContent = chrome.i18n.getMessage("select_target");
-  
-  // 更新HTML中的标签文本
-  document.querySelector('label[for="selectAllGroups"]').textContent = chrome.i18n.getMessage("select_all");
+  const bookmarkFolderLabel = document.querySelector('label[for="bookmarkFolder"]');
+  if (bookmarkFolderLabel) {
+    bookmarkFolderLabel.textContent = chrome.i18n.getMessage("select_target");
+  }
 }
 
 // 初始化语言设置
@@ -596,6 +610,99 @@ function initLanguage() {
   // 初始翻译
   translateAllElements();
   updateUIForLanguage();
+}
+
+// Select2 功能
+function toggleSelect2() {
+  const dropdown = document.getElementById('select2-dropdown');
+  if (dropdown) {
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+}
+
+// 更新 Select2 选中的文本
+function updateSelect2SelectedText() {
+  const bookmarkFolder = document.getElementById('bookmarkFolder');
+  const selectedTextElement = document.getElementById('select2-selected-text');
+  
+  if (bookmarkFolder && selectedTextElement) {
+    const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
+    if (selectedOption) {
+      selectedTextElement.textContent = selectedOption.textContent;
+    } else {
+      selectedTextElement.textContent = chrome.i18n.getMessage("bookmark_folder") || "选择收藏夹位置";
+    }
+  }
+}
+
+// 初始化 Select2
+function initSelect2() {
+  // 添加帮助按钮事件
+  const helpButton = document.querySelector('.help-button');
+  if (helpButton) {
+    helpButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // 打开选项页面
+      chrome.runtime.openOptionsPage();
+    });
+  }
+  
+  // 添加点击展开/收起事件
+  const select2Selection = document.querySelector('.select2-selection');
+  if (select2Selection) {
+    select2Selection.addEventListener('click', toggleSelect2);
+  }
+  
+  // 点击外部关闭下拉菜单
+  document.addEventListener('click', (e) => {
+    const container = document.querySelector('.select2-container');
+    const dropdown = document.getElementById('select2-dropdown');
+    if (container && dropdown && !container.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+  
+  // 添加清空按钮事件
+  const select2Clear = document.getElementById('select2-clear');
+  if (select2Clear) {
+    select2Clear.addEventListener('click', (e) => {
+      e.stopPropagation(); // 防止触发选择框展开
+      clearSelect2Selection();
+    });
+  }
+  
+  // 初始更新显示文本
+  updateSelect2SelectedText();
+  
+  // 翻译搜索框占位符
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.placeholder = chrome.i18n.getMessage("bookmark_folder") || "搜索收藏夹位置";
+  }
+  
+
+}
+
+// 清空Select2选择
+function clearSelect2Selection() {
+  const bookmarkFolder = document.getElementById('bookmarkFolder');
+  const select2SelectedText = document.getElementById('select2-selected-text');
+  
+  // 设置为默认选择
+  chrome.storage.local.get("defaultFolderId", (res) => {
+    if (res.defaultFolderId) {
+      bookmarkFolder.value = res.defaultFolderId;
+    } else {
+      // 如果没有默认文件夹，设置为空
+      bookmarkFolder.value = "";
+    }
+    
+    // 更新显示文本
+    updateSelect2SelectedText();
+    
+    // 更新默认位置文字
+    updateDefaultFolderText();
+  });
 }
 
 // 初始化事件监听
@@ -612,10 +719,16 @@ function initEventListeners() {
   document.getElementById("refreshList").addEventListener("click", renderOpenedGroups);
   
   // 书签文件夹选择变化事件
-  document.getElementById("bookmarkFolder").addEventListener("change", updateDefaultFolderText);
+  document.getElementById("bookmarkFolder").addEventListener("change", () => {
+    updateDefaultFolderText();
+    updateSelect2SelectedText();
+  });
   
   // 初始化语言
   initLanguage();
+  
+  // 初始化 Select2
+  initSelect2();
 }
 
 // 初始化

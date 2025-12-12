@@ -133,5 +133,8 @@
   },
   "skipped_duplicates": {
     "message": "Skipped $1 duplicate tab groups."
+  },
+  "tab_group_selection": {
+    "message": "Select Tab Group:"
   }
 }

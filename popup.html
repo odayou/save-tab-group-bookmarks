@@ -357,6 +357,106 @@
     ::-webkit-scrollbar-thumb:hover {
         background: #A6A6A6;
     }
+    
+    /* Select2 样式 */
+    .select2-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 6px;
+    }
+    
+    .select2-selection {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 10px;
+        border: 1px solid var(--edge-border);
+        border-radius: 3px;
+        background: white;
+        cursor: pointer;
+        user-select: none;
+    }
+    
+    .select2-selection:hover {
+        border-color: var(--edge-primary);
+    }
+    
+    .select2-selected-text {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    .select2-arrow {
+        font-size: 10px;
+        color: var(--edge-secondary-text);
+    }
+    
+    .select2-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: white;
+        border: 1px solid var(--edge-border);
+        border-radius: 3px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        margin-top: -1px;
+    }
+    
+    .select2-search-input {
+        width: 100%;
+        padding: 6px 10px;
+        border: none;
+        border-bottom: 1px solid var(--edge-border);
+        box-sizing: border-box;
+        font-size: 12px;
+    }
+    
+    .select2-search-input:focus {
+        outline: none;
+    }
+    
+    .select2-results {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    
+    .select2-results-select {
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    
+    /* 自定义select样式 */
+    #bookmarkFolder.select2-results-select option {
+        padding: 6px 10px;
+        cursor: pointer;
+    }
+    
+    #bookmarkFolder.select2-results-select option:hover {
+        background-color: #f0f7ff;
+    }
+    
+    /* 清空按钮样式 */
+    .select2-clear {
+        font-size: 12px;
+        color: var(--edge-secondary-text);
+        cursor: pointer;
+        margin-right: 8px;
+        padding: 0 4px;
+        border-radius: 2px;
+        transition: all 0.2s;
+    }
+    
+    .select2-clear:hover {
+        background-color: #f0f0f0;
+        color: var(--edge-danger);
+    }
   </style>
 </head>
 <body>
@@ -370,6 +470,9 @@
 
     <!-- 当前打开的标签组页面 -->
     <div id="opened-groups">
+        <!-- 标签页组选择区域总label -->
+        <label class="form-label" style="margin-bottom: 3px; display: block;" data-i18n="tab_group_selection">选择目标组:</label>
+        
         <!-- 全选控制 -->
         <div class="select-all-container">
             <input type="checkbox" id="selectAllGroups" class="group-checkbox">
@@ -384,12 +487,22 @@
             <!-- 渲染所有标签组 -->
         </div>
 
-        <!-- 搜索并选择收藏夹位置 -->
+        <!-- 搜索并选择收藏夹位置 - 整合为select2样式 -->
         <div style="margin-bottom: 6px;">
-            <label for="searchInput" class="form-label" style="margin-bottom: 3px; display: block;"></label>
-            <input type="text" id="searchInput" class="form-input" />
             <label for="bookmarkFolder" class="form-label" style="margin-bottom: 3px; display: block;"></label>
-            <select id="bookmarkFolder"></select>
+            <div class="select2-container">
+                <div class="select2-selection">
+                <span id="select2-selected-text" class="select2-selected-text">选择收藏夹位置</span>
+                <div class="select2-clear" id="select2-clear">✕</div>
+                <div class="select2-arrow">▼</div>
+            </div>
+                <div id="select2-dropdown" class="select2-dropdown" style="display: none;">
+                    <input type="text" id="searchInput" class="select2-search-input" placeholder="搜索收藏夹位置" />
+                    <div class="select2-results">
+                        <select id="bookmarkFolder" class="select2-results-select"></select>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 设置默认位置选项 -->
@@ -404,38 +517,7 @@
         </div>
     </div>
 
-    <script>
-        // 帮助按钮交互 - 跳转到选项页面
-        const helpButton = document.querySelector('.help-button');
-        helpButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            // 打开选项页面
-            chrome.runtime.openOptionsPage();
-        });
-        
-        // 实时更新默认位置文字
-        const bookmarkFolder = document.getElementById('bookmarkFolder');
-        const defaultFolderText = document.getElementById('defaultFolderText');
-        
-        bookmarkFolder.addEventListener('change', () => {
-            const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
-            if (selectedOption) {
-                const folderName = selectedOption.textContent;
-                // 使用翻译函数更新文本
-                defaultFolderText.textContent = chrome.i18n.getMessage("set_default_folder", [folderName]);
-            }
-        });
-        
-        // 初始加载时更新默认位置文字
-        document.addEventListener('DOMContentLoaded', () => {
-            const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
-            if (selectedOption) {
-                const folderName = selectedOption.textContent;
-                // 使用翻译函数更新文本
-                defaultFolderText.textContent = chrome.i18n.getMessage("set_default_folder", [folderName]);
-            }
-        });
-    </script>
+
     <script src="popup.js"></script>
 </body>
 </html>

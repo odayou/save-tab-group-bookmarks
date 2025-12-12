@@ -133,5 +133,8 @@
   },
   "skipped_duplicates": {
     "message": "已跳过 $1 个重复的标签组。"
+  },
+  "tab_group_selection": {
+    "message": "选择标签组:"
   }
 }
