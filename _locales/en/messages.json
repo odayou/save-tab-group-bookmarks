@@ -1,0 +1,137 @@
+{
+  "extensionName": {
+    "message": "Bookmark Tab Group"
+  },
+  "extensionDescription": {
+    "message": "Bookmark tab groups, supports custom names, save locations, and right-click operations"
+  },
+  "plugin_title": {
+    "message": "Bookmark Tab Group"
+  },
+  "quick_add_title": {
+    "message": "Quick Add"
+  },
+  "quick_add_desc": {
+    "message": "Add current tab group to bookmarks"
+  },
+  "tab_group_name": {
+    "message": "Group Name"
+  },
+  "bookmark_folder": {
+    "message": "Bookmark Folder"
+  },
+  "save_button": {
+    "message": "Save"
+  },
+  "quick_save_button": {
+    "message": "Quick Save"
+  },
+  "added_to_bookmarks": {
+    "message": "Added to bookmarks!"
+  },
+  "duplicate_group": {
+    "message": "This group has already been saved!"
+  },
+  "error_occurred": {
+    "message": "An error occurred."
+  },
+  "no_tab_group": {
+    "message": "No tab group found."
+  },
+  "language_auto": {
+    "message": "Follow Browser"
+  },
+  "language_zh": {
+    "message": "中文"
+  },
+  "language_en": {
+    "message": "English"
+  },
+  "version_4_0_features": {
+    "message": "Version 4.0 Features"
+  },
+  "feature_content_matching": {
+    "message": "Added content-based matching for duplicate detection"
+  },
+  "feature_quick_add": {
+    "message": "Implemented quick add with async duplicate check"
+  },
+  "feature_ui_optimization": {
+    "message": "Optimized UI with clearer labels and component-inline alerts"
+  },
+  "feature_multilingual": {
+    "message": "Added multilingual support (follow browser, Chinese/English)"
+  },
+  "feature_improved_detection": {
+    "message": "Improved tab group detection logic"
+  },
+  "feature_context_menu": {
+    "message": "Enhanced context menu functionality"
+  },
+  "feature_ui_fixes": {
+    "message": "Fixed bookmarkFolder height and help button issues"
+  },
+  "selected_single": {
+    "message": "Selected: $1"
+  },
+  "selected_multiple": {
+    "message": "Selected $1 tab groups"
+  },
+  "total_pages": {
+    "message": "$1 pages"
+  },
+  "save_success": {
+    "message": "Successfully saved $1 tab groups to bookmarks!"
+  },
+  "set_default_folder": {
+    "message": "Set '$1' as default save location"
+  },
+  "refresh_button": {
+    "message": "Refresh"
+  },
+  "search_target": {
+    "message": "Search target location:"
+  },
+  "select_target": {
+    "message": "Select target location:"
+  },
+  "select_all": {
+    "message": "Select All"
+  },
+  "help_title": {
+    "message": "Core Features"
+  },
+  "help_feature_1": {
+    "message": "1. Quickly save current tab groups to bookmarks"
+  },
+  "help_feature_2": {
+    "message": "2. Support batch saving multiple tab groups"
+  },
+  "help_feature_3": {
+    "message": "3. Smart duplicate content detection to avoid duplicates"
+  },
+  "help_feature_4": {
+    "message": "4. Support custom save locations and default folders"
+  },
+  "help_close": {
+    "message": "Close"
+  },
+  "warning_no_groups": {
+    "message": "Please select tab groups to save first"
+  },
+  "warning_no_folder": {
+    "message": "Please select a bookmark location first"
+  },
+  "unnamed_group": {
+    "message": "Unnamed Group"
+  },
+  "duplicate_warning": {
+    "message": "Tab group \"$1\" may already exist with duplicate content (\"$2\"), please check."
+  },
+  "duplicate_confirm": {
+    "message": "The content of tab group \"$1\" already exists in bookmarks (\"$2\"), do you still want to save it?"
+  },
+  "skipped_duplicates": {
+    "message": "Skipped $1 duplicate tab groups."
+  }
+}

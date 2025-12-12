@@ -1,5 +1,6 @@
 // 初始化时创建菜单项，但默认隐藏
 chrome.runtime.onInstalled.addListener(() => {
+  // 右键菜单使用固定文本，因为Chrome不支持动态更新
   chrome.contextMenus.create({
     id: "save-tab-group",
     title: "将标签组添加到收藏夹",

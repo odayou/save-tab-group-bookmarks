@@ -1,10 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "收藏标签组 Bookmark Tab Group",
-  "name_en": "Bookmark Tab Group",
+  "name": "__MSG_extensionName__",
   "version": "4.0",
-  "description": "将标签组添加到收藏夹，支持自定义名称、保存的位置和右键操作 Bookmark tab groups, supports custom names, save locations, and right-click operations",
-  "description_en": "Bookmark tab groups, supports custom names, save locations, and right-click operations",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
   "permissions": ["tabs", "bookmarks", "storage", "tabGroups", "contextMenus"],
   "host_permissions": ["<all_urls>"],
   "action": {

@@ -58,10 +58,10 @@ function updateSelectedGroupsInfo() {
     const groupId = selectedCheckboxes[0].value;
     const groupElement = document.querySelector(`input[name="group-item"][value="${groupId}"]`).closest('.group-item');
     const groupTitle = groupElement.querySelector('.group-title').textContent;
-    infoElement.textContent = `已选中：${groupTitle}`;
+    infoElement.textContent = chrome.i18n.getMessage("selected_single", [groupTitle]);
   } else {
     // 多个选中，显示数量
-    infoElement.textContent = `已选中${selectedCheckboxes.length}个标签组`;
+    infoElement.textContent = chrome.i18n.getMessage("selected_multiple", [selectedCheckboxes.length.toString()]);
   }
 }
 
@@ -117,7 +117,7 @@ async function renderOpenedGroups() {
   }
   
   if (groups.length === 0) {
-    groupsContainer.innerHTML = '<div class="empty-state">暂无打开的标签组</div>';
+    groupsContainer.innerHTML = `<div class="empty-state">${chrome.i18n.getMessage("no_tab_group")}</div>`;
     return;
   }
   
@@ -149,8 +149,8 @@ async function renderOpenedGroups() {
           <div class="group-toggle" data-group-id="${group.id}">▶</div>
           <div class="color-tag" style="background-color: ${group.color}"></div>
           <div class="group-info">
-            <span class="group-title">${group.title || `未命名组`}</span>
-            <span class="tab-count">共${groupTabs.length}个页面</span>
+            <span class="group-title">${group.title || chrome.i18n.getMessage("unnamed_group")}</span>
+            <span class="tab-count">${chrome.i18n.getMessage("total_pages", [groupTabs.length.toString()])}</span>
           </div>
         </label>
       </div>
@@ -371,7 +371,7 @@ async function asyncCheckDuplicateGroup(savedFolder, groupTabs, parentId, groupT
     
     if (duplicateFound) {
       createNotification(
-        `标签组 "${groupTitle || '未命名组'}" 可能已存在重复内容（"${duplicateFolder.title}"），请注意检查。`,
+        chrome.i18n.getMessage("duplicate_warning", [groupTitle || chrome.i18n.getMessage("unnamed_group"), duplicateFolder.title]),
         'warning'
       );
     }
@@ -433,7 +433,7 @@ async function saveSelectedGroups() {
   // 获取所有选中的标签组
   const selectedCheckboxes = document.querySelectorAll('input[name="group-item"]:checked');
   if (selectedCheckboxes.length === 0) {
-    showInlineAlert("请先选择要保存的标签组", "warning");
+    showInlineAlert(chrome.i18n.getMessage("warning_no_groups"), "warning");
     return;
   }
   
@@ -447,7 +447,7 @@ async function saveSelectedGroups() {
   const parentId = document.getElementById("bookmarkFolder").value;
   
   if (!parentId) {
-    showInlineAlert("请先选择要保存的收藏夹位置", "warning");
+    showInlineAlert(chrome.i18n.getMessage("warning_no_folder"), "warning");
     return;
   }
   
@@ -468,7 +468,7 @@ async function saveSelectedGroups() {
     const { duplicateFound, duplicateFolder } = await checkDuplicateGroup(groupTabs, parentId, group.title);
     
     if (duplicateFound) {
-      const confirmSave = confirm(`标签组 "${group.title || '未命名组'}" 的内容已存在于收藏夹中（"${duplicateFolder.title}"），是否仍要保存？`);
+      const confirmSave = confirm(chrome.i18n.getMessage("duplicate_confirm", [group.title || chrome.i18n.getMessage("unnamed_group"), duplicateFolder.title]));
       if (!confirmSave) {
         skippedCount++;
         continue; // 跳过当前标签组
@@ -496,9 +496,9 @@ async function saveSelectedGroups() {
   }
   
   // 反馈结果
-  let message = `成功保存 ${savedCount} 个标签组到收藏夹！`;
+  let message = chrome.i18n.getMessage("save_success", [savedCount.toString()]);
   if (skippedCount > 0) {
-    message += `\n已跳过 ${skippedCount} 个重复的标签组。`;
+    message += `\n${chrome.i18n.getMessage("skipped_duplicates", [skippedCount.toString()])}`;
   }
   
   showInlineAlert(message, "success");
@@ -550,10 +550,52 @@ function updateDefaultFolderText() {
   const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
   if (selectedOption) {
     const folderName = selectedOption.textContent;
-    defaultFolderText.textContent = `把「${folderName}」设置为默认保存的位置`;
+    defaultFolderText.textContent = chrome.i18n.getMessage("set_default_folder", [folderName]);
   } else {
-    defaultFolderText.textContent = '设为默认保存位置';
+    defaultFolderText.textContent = chrome.i18n.getMessage("language_auto") === "Follow Browser" ? "Set as default location" : "设为默认保存位置";
   }
+}
+
+// 翻译所有带有data-i18n属性的元素
+function translateAllElements() {
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(element => {
+    const i18nKey = element.dataset.i18n;
+    if (i18nKey) {
+      element.textContent = chrome.i18n.getMessage(i18nKey);
+    }
+  });
+}
+
+// 更新UI文本
+function updateUIForLanguage() {
+  // 更新保存按钮文本
+  document.getElementById("saveGroup").textContent = chrome.i18n.getMessage("save_button");
+  
+  // 更新刷新按钮文本
+  document.getElementById("refreshList").textContent = chrome.i18n.getMessage("refresh_button");
+  
+  // 更新搜索框占位符
+  document.getElementById("searchInput").placeholder = chrome.i18n.getMessage("bookmark_folder");
+  
+  // 更新全选文本
+  document.querySelector('label[for="selectAllGroups"]').textContent = chrome.i18n.getMessage("select_all");
+  
+  // 更新搜索标签
+  document.querySelector('label[for="searchInput"]').textContent = chrome.i18n.getMessage("search_target");
+  
+  // 更新选择标签
+  document.querySelector('label[for="bookmarkFolder"]').textContent = chrome.i18n.getMessage("select_target");
+  
+  // 更新HTML中的标签文本
+  document.querySelector('label[for="selectAllGroups"]').textContent = chrome.i18n.getMessage("select_all");
+}
+
+// 初始化语言设置
+function initLanguage() {
+  // 初始翻译
+  translateAllElements();
+  updateUIForLanguage();
 }
 
 // 初始化事件监听
@@ -571,6 +613,9 @@ function initEventListeners() {
   
   // 书签文件夹选择变化事件
   document.getElementById("bookmarkFolder").addEventListener("change", updateDefaultFolderText);
+  
+  // 初始化语言
+  initLanguage();
 }
 
 // 初始化

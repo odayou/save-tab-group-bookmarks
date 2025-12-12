@@ -1,0 +1,137 @@
+{
+  "extensionName": {
+    "message": "收藏标签组"
+  },
+  "extensionDescription": {
+    "message": "将标签组添加到收藏夹，支持自定义名称、保存的位置和右键操作"
+  },
+  "plugin_title": {
+    "message": "收藏标签组"
+  },
+  "quick_add_title": {
+    "message": "快速添加"
+  },
+  "quick_add_desc": {
+    "message": "将当前标签组添加到收藏夹"
+  },
+  "tab_group_name": {
+    "message": "分组名称"
+  },
+  "bookmark_folder": {
+    "message": "收藏夹位置"
+  },
+  "save_button": {
+    "message": "保存"
+  },
+  "quick_save_button": {
+    "message": "快速保存"
+  },
+  "added_to_bookmarks": {
+    "message": "已添加到收藏夹！"
+  },
+  "duplicate_group": {
+    "message": "该分组已被保存！"
+  },
+  "error_occurred": {
+    "message": "发生错误。"
+  },
+  "no_tab_group": {
+    "message": "未找到标签组。"
+  },
+  "language_auto": {
+    "message": "跟随浏览器"
+  },
+  "language_zh": {
+    "message": "中文"
+  },
+  "language_en": {
+    "message": "English"
+  },
+  "version_4_0_features": {
+    "message": "4.0 版本特性"
+  },
+  "feature_content_matching": {
+    "message": "添加了基于内容的匹配以检测重复项"
+  },
+  "feature_quick_add": {
+    "message": "实现了带异步重复检查的快速添加"
+  },
+  "feature_ui_optimization": {
+    "message": "优化了 UI，使用更清晰的标签和组件内联提示"
+  },
+  "feature_multilingual": {
+    "message": "添加了多语言支持（跟随浏览器、中文/英文）"
+  },
+  "feature_improved_detection": {
+    "message": "改进了标签组检测逻辑"
+  },
+  "feature_context_menu": {
+    "message": "增强了上下文菜单功能"
+  },
+  "feature_ui_fixes": {
+    "message": "修复了 bookmarkFolder 高度和帮助按钮问题"
+  },
+  "selected_single": {
+    "message": "已选中：$1"
+  },
+  "selected_multiple": {
+    "message": "已选中$1个标签组"
+  },
+  "total_pages": {
+    "message": "共$1个页面"
+  },
+  "save_success": {
+    "message": "成功保存 $1 个标签组到收藏夹！"
+  },
+  "set_default_folder": {
+    "message": "把「$1」设置为默认保存的位置"
+  },
+  "refresh_button": {
+    "message": "刷新"
+  },
+  "search_target": {
+    "message": "搜索目标位置："
+  },
+  "select_target": {
+    "message": "选择目标位置："
+  },
+  "select_all": {
+    "message": "全选"
+  },
+  "help_title": {
+    "message": "核心功能"
+  },
+  "help_feature_1": {
+    "message": "1. 快速将当前打开的标签组保存到收藏夹"
+  },
+  "help_feature_2": {
+    "message": "2. 支持选择多个标签组批量保存"
+  },
+  "help_feature_3": {
+    "message": "3. 智能检测重复内容，避免重复保存"
+  },
+  "help_feature_4": {
+    "message": "4. 支持自定义保存位置和默认文件夹"
+  },
+  "help_close": {
+    "message": "关闭"
+  },
+  "warning_no_groups": {
+    "message": "请先选择要保存的标签组"
+  },
+  "warning_no_folder": {
+    "message": "请先选择要保存的收藏夹位置"
+  },
+  "unnamed_group": {
+    "message": "未命名组"
+  },
+  "duplicate_warning": {
+    "message": "标签组 \"$1\" 可能已存在重复内容（\"$2\"），请注意检查。"
+  },
+  "duplicate_confirm": {
+    "message": "标签组 \"$1\" 的内容已存在于收藏夹中（\"$2\"），是否仍要保存？"
+  },
+  "skipped_duplicates": {
+    "message": "已跳过 $1 个重复的标签组。"
+  }
+}

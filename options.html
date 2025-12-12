@@ -1,5 +1,294 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"><title>设置</title></head>
-<body><p>默认文件夹可在弹窗中设置。</p></body>
+<head>
+    <meta charset="utf-8">
+    <title>__MSG_extensionName__ - 版本更新日志</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #0078D4;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #005A9E;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #004776;
+            margin-top: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .version-section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-table {
+            margin: 15px 0;
+        }
+        .update-notes {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #0078D4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bookmark Tab Group - Version Update Log</h1>
+    
+    <div class="version-section">
+        <h2>Version 4.0</h2>
+        
+        <h3>功能特性 / Features</h3>
+        <table class="feature-table">
+            <tr>
+                <th>中文 / Chinese</th>
+                <th>英文 / English</th>
+            </tr>
+            <tr>
+                <td>添加了基于内容的匹配以检测重复项</td>
+                <td>Added content-based matching for duplicate detection</td>
+            </tr>
+            <tr>
+                <td>实现了带异步重复检查的快速添加</td>
+                <td>Implemented quick add with async duplicate check</td>
+            </tr>
+            <tr>
+                <td>优化了 UI，使用更清晰的标签和组件内联提示</td>
+                <td>Optimized UI with clearer labels and component-inline alerts</td>
+            </tr>
+            <tr>
+                <td>添加了多语言支持（跟随浏览器、中文/英文）</td>
+                <td>Added multilingual support (follow browser, Chinese/English)</td>
+            </tr>
+            <tr>
+                <td>改进了标签组检测逻辑</td>
+                <td>Improved tab group detection logic</td>
+            </tr>
+            <tr>
+                <td>增强了上下文菜单功能</td>
+                <td>Enhanced context menu functionality</td>
+            </tr>
+            <tr>
+                <td>修复了 bookmarkFolder 高度和帮助按钮问题</td>
+                <td>Fixed bookmarkFolder height and help button issues</td>
+            </tr>
+            <tr>
+                <td>简化了 UI，移除了"已保存的分组"标签</td>
+                <td>Simplified UI by removing "已保存的分组" tab</td>
+            </tr>
+        </table>
+        
+        <h3>更新说明 / Update Notes</h3>
+        <div class="update-notes">
+            <ul>
+                <li>使用内容匹配替代临时分组 ID 进行重复检测</li>
+                <li>支持智能语言切换，根据浏览器设置自动适配</li>
+                <li>优化了保存流程，添加了异步重复检查</li>
+                <li>改进了帮助系统和 UI 提示</li>
+                <li>修复了已知的 UI 布局问题</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="version-section">
+        <h2>Version 3.0</h2>
+        
+        <h3>功能特性 / Features</h3>
+        <table class="feature-table">
+            <tr>
+                <th>中文 / Chinese</th>
+                <th>英文 / English</th>
+            </tr>
+            <tr>
+                <td>支持批量保存标签组到收藏夹</td>
+                <td>Support batch saving tab groups to bookmarks</td>
+            </tr>
+            <tr>
+                <td>可以设置默认保存位置</td>
+                <td>Can set default save location</td>
+            </tr>
+            <tr>
+                <td>支持搜索收藏夹位置</td>
+                <td>Support searching bookmark locations</td>
+            </tr>
+            <tr>
+                <td>添加了刷新功能</td>
+                <td>Added refresh functionality</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="version-section">
+        <h2>Version 2.0</h2>
+        
+        <h3>功能特性 / Features</h3>
+        <table class="feature-table">
+            <tr>
+                <th>中文 / Chinese</th>
+                <th>英文 / English</th>
+            </tr>
+            <tr>
+                <td>支持右键菜单操作</td>
+                <td>Support right-click menu operations</td>
+            </tr>
+            <tr>
+                <td>可以自定义标签组名称</td>
+                <td>Can customize tab group names</td>
+            </tr>
+            <tr>
+                <td>支持选择保存位置</td>
+                <td>Support selecting save location</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="version-section">
+        <h2>Version 1.0</h2>
+        
+        <h3>功能特性 / Features</h3>
+        <table class="feature-table">
+            <tr>
+                <th>中文 / Chinese</th>
+                <th>英文 / English</th>
+            </tr>
+            <tr>
+                <td>基础标签组保存功能</td>
+                <td>Basic tab group saving functionality</td>
+            </tr>
+            <tr>
+                <td>支持 Chrome 扩展 Manifest V3</td>
+                <td>Support Chrome Extension Manifest V3</td>
+            </tr>
+            <tr>
+                <td>简单的 UI 界面</td>
+                <td>Simple UI interface</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="usage-section">
+        <h2>使用说明 / Usage Instructions</h2>
+        
+        <h3>核心功能 / Core Features</h3>
+        <div class="usage-content">
+            <h4>1. 保存标签组</h4>
+            <ul>
+                <li><strong>中文：</strong>选择要保存的标签组，选择收藏夹位置，点击"保存"按钮即可将标签组保存到收藏夹。</li>
+                <li><strong>English：</strong>Select the tab groups to save, choose a bookmark location, and click the "Save" button to save the tab groups to bookmarks.</li>
+            </ul>
+            
+            <h4>2. 批量保存</h4>
+            <ul>
+                <li><strong>中文：</strong>可以同时选择多个标签组进行批量保存，提高效率。</li>
+                <li><strong>English：</strong>You can select multiple tab groups for batch saving to improve efficiency.</li>
+            </ul>
+            
+            <h4>3. 智能重复检测</h4>
+            <ul>
+                <li><strong>中文：</strong>基于标签内容进行匹配，智能检测重复的标签组，避免重复保存。</li>
+                <li><strong>English：</strong>Based on tab content matching, intelligently detects duplicate tab groups to avoid duplicate saves.</li>
+            </ul>
+            
+            <h4>4. 自定义保存位置</h4>
+            <ul>
+                <li><strong>中文：</strong>可以搜索并选择任意收藏夹位置，还可以设置默认保存位置。</li>
+                <li><strong>English：</strong>You can search and select any bookmark location, and also set a default save location.</li>
+            </ul>
+            
+            <h4>5. 右键菜单操作</h4>
+            <ul>
+                <li><strong>中文：</strong>在标签页上右键点击，可以快速将当前标签组添加到收藏夹。</li>
+                <li><strong>English：</strong>Right-click on a tab to quickly add the current tab group to bookmarks.</li>
+            </ul>
+        </div>
+        
+        <h3>联系方式 / Contact Information</h3>
+        <div class="contact-content">
+            <p><strong>GitHub 仓库 / GitHub Repository：</strong>
+                <a href="https://github.com/yourusername/save-tab-group-bookmarks-v3" target="_blank">https://github.com/yourusername/save-tab-group-bookmarks-v3</a>
+            </p>
+            <p><strong>反馈问题 / Report Issues：</strong>
+                <a href="https://github.com/yourusername/save-tab-group-bookmarks-v3/issues" target="_blank">GitHub Issues</a>
+            </p>
+            <p><strong>版本历史 / Version History：</strong>如上所示</p>
+        </div>
+    </div>
+    
+    <style>
+        .usage-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+        }
+        .usage-content {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .contact-content {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .usage-content h4 {
+            color: #0078D4;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .usage-content ul {
+            margin-bottom: 15px;
+        }
+        .usage-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .contact-content p {
+            margin-bottom: 12px;
+        }
+        .contact-content a {
+            color: #0078D4;
+            text-decoration: none;
+        }
+        .contact-content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</body>
 </html>

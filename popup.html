@@ -362,26 +362,18 @@
 <body>
     <!-- 插件标题栏 -->
     <div class="plugin-header">
-        <h1 class="plugin-title">标签页组归档</h1>
+        <h1 class="plugin-title" data-i18n="plugin_title">标签组收藏工具</h1>
         <button class="help-button" title="查看帮助">?</button>
     </div>
     
-    <!-- 帮助提示 -->
-    <div class="help-tooltip" style="display: none;">
-        <h4 style="margin: 0 0 8px 0; font-size: 14px;">核心功能</h4>
-        <p style="margin: 0 0 8px 0; font-size: 13px;">1. 快速将当前打开的标签组保存到收藏夹</p>
-        <p style="margin: 0 0 8px 0; font-size: 13px;">2. 支持选择多个标签组批量保存</p>
-        <p style="margin: 0 0 8px 0; font-size: 13px;">3. 智能检测重复内容，避免重复保存</p>
-        <p style="margin: 0; font-size: 13px;">4. 支持自定义保存位置和默认文件夹</p>
-        <button style="margin-top: 8px; padding: 4px 8px; font-size: 12px; background: var(--edge-primary); color: white; border: none; border-radius: 3px; cursor: pointer;">关闭</button>
-    </div>
+
 
     <!-- 当前打开的标签组页面 -->
     <div id="opened-groups">
         <!-- 全选控制 -->
         <div class="select-all-container">
             <input type="checkbox" id="selectAllGroups" class="group-checkbox">
-            <label for="selectAllGroups" style="margin-left: 8px;">全选</label>
+            <label for="selectAllGroups" style="margin-left: 8px;"></label>
         </div>
         
         <!-- 已选中分组提示 -->
@@ -394,47 +386,31 @@
 
         <!-- 搜索并选择收藏夹位置 -->
         <div style="margin-bottom: 6px;">
-            <label for="searchInput" class="form-label" style="margin-bottom: 3px; display: block;">搜索目标位置:</label>
-            <input type="text" id="searchInput" class="form-input" placeholder="保存到收藏夹哪个位置？搜索并选择" />
-            <label for="bookmarkFolder" class="form-label" style="margin-bottom: 3px; display: block;">选择目标位置:</label>
+            <label for="searchInput" class="form-label" style="margin-bottom: 3px; display: block;"></label>
+            <input type="text" id="searchInput" class="form-input" />
+            <label for="bookmarkFolder" class="form-label" style="margin-bottom: 3px; display: block;"></label>
             <select id="bookmarkFolder"></select>
         </div>
 
         <!-- 设置默认位置选项 -->
         <div class="default-folder-option">
-            <label><input type="checkbox" id="setDefaultFolder" /> <span id="defaultFolderText">设为默认保存位置</span></label>
+            <label><input type="checkbox" id="setDefaultFolder" /> <span id="defaultFolderText"></span></label>
         </div>
 
         <!-- 保存按钮 -->
         <div class="group-actions"> 
-            <button id="saveGroup" class="btn btn-primary" style="flex-grow: 1;">保存选中的标签组</button>
-            <button id="refreshList" class="btn">刷新</button>
+            <button id="saveGroup" class="btn btn-primary" style="flex-grow: 1;"></button>
+            <button id="refreshList" class="btn"></button>
         </div>
     </div>
 
     <script>
-        // 帮助按钮交互
+        // 帮助按钮交互 - 跳转到选项页面
         const helpButton = document.querySelector('.help-button');
-        const helpTooltip = document.querySelector('.help-tooltip');
-        
         helpButton.addEventListener('click', (e) => {
             e.stopPropagation();
-            helpTooltip.style.display = helpTooltip.style.display === 'block' ? 'none' : 'block';
-        });
-        
-        // 点击关闭按钮关闭帮助
-        const closeButton = helpTooltip.querySelector('button');
-        if (closeButton) {
-            closeButton.addEventListener('click', () => {
-                helpTooltip.style.display = 'none';
-            });
-        }
-        
-        // 点击页面其他位置关闭帮助
-        document.addEventListener('click', (e) => {
-            if (!helpButton.contains(e.target) && !helpTooltip.contains(e.target)) {
-                helpTooltip.style.display = 'none';
-            }
+            // 打开选项页面
+            chrome.runtime.openOptionsPage();
         });
         
         // 实时更新默认位置文字
@@ -445,7 +421,8 @@
             const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
             if (selectedOption) {
                 const folderName = selectedOption.textContent;
-                defaultFolderText.textContent = `把「${folderName}」设置为默认保存的位置`;
+                // 使用翻译函数更新文本
+                defaultFolderText.textContent = chrome.i18n.getMessage("set_default_folder", [folderName]);
             }
         });
         
@@ -454,7 +431,8 @@
             const selectedOption = bookmarkFolder.options[bookmarkFolder.selectedIndex];
             if (selectedOption) {
                 const folderName = selectedOption.textContent;
-                defaultFolderText.textContent = `把「${folderName}」设置为默认保存的位置`;
+                // 使用翻译函数更新文本
+                defaultFolderText.textContent = chrome.i18n.getMessage("set_default_folder", [folderName]);
             }
         });
     </script>
